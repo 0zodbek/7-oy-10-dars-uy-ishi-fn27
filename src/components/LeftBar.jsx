@@ -21,20 +21,20 @@ const Sidebar = () => {
   ];
   const navigate = useNavigate()
   return (
-    <div className="w-full h-full bg-black text-white flex flex-col p-4 space-y-4">
+    <div className="md:w-[240px] lg:w-[280px] h-full bg-black text-white flex flex-col p-2 md:p-4 space-y-2 md:space-y-4">
       <div className="space-y-4" onClick={()=>{navigate('/')}}>
         {/* Main Navigation */}
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center space-x-2 md:space-x-3 hover:text-white text-gray-300 cursor-pointer">
           <AiOutlineHome size={24} />
-          <span className="text-sm font-semibold">Home</span>
+          <span className="hidden md:inline text-sm font-semibold">Home</span>
         </div>
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center space-x-2 md:space-x-3 hover:text-white text-gray-300 cursor-pointer">
           <AiOutlineSearch size={24} />
-          <span className="text-sm font-semibold">Search</span>
+          <span className="hidden md:inline text-sm font-semibold">Search</span>
         </div>
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center space-x-2 md:space-x-3 hover:text-white text-gray-300 cursor-pointer">
           <BiLibrary size={24} />
-          <span className="text-sm font-semibold">Your Library</span>
+          <span className="hidden md:inline text-sm font-semibold">Your Library</span>
         </div>
       </div>
 
@@ -42,22 +42,25 @@ const Sidebar = () => {
 
       {/* Playlist Management */}
       <div className="space-y-4">
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center space-x-2 md:space-x-3 hover:text-white text-gray-300 cursor-pointer">
           <BiPlusCircle size={24} />
-          <span className="text-sm font-semibold">Create Playlist</span>
+          <span className="hidden md:inline text-sm font-semibold">Create Playlist</span>
         </div>
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center space-x-2 md:space-x-3 hover:text-white text-gray-300 cursor-pointer">
           <FaHeart size={24} className="text-purple-600" />
-          <span className="text-sm font-semibold">Liked Songs</span>
+          <span className="hidden md:inline text-sm font-semibold">Liked Songs</span>
         </div>
       </div>
 
       <hr className="border-t border-gray-700" />
 
-      {/* Playlists */}
-      <div className="flex-1 overflow-y-auto scrollbar-hide mt-4">
+      {/* Playlists - Hidden on mobile */}
+      <div className="hidden md:flex flex-1 flex-col overflow-y-auto scrollbar-hide mt-2 md:mt-4 space-y-2">
         {playlists.map((playlist, index) => (
-          <div key={index} className="text-sm text-gray-400 hover:text-white cursor-pointer">
+          <div 
+            key={index} 
+            className="text-xs md:text-sm text-gray-400 hover:text-white cursor-pointer truncate"
+          >
             {playlist}
           </div>
         ))}
