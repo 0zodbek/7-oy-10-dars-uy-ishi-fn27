@@ -2,7 +2,7 @@ import React from 'react';
 import { AiOutlineHome, AiOutlineSearch } from 'react-icons/ai';
 import { BiLibrary, BiPlusCircle } from 'react-icons/bi';
 import { FaHeart } from 'react-icons/fa';
-
+import { useNavigate } from 'react-router-dom';
 const Sidebar = () => {
   const playlists = [
     "Chill Mix", 
@@ -19,10 +19,10 @@ const Sidebar = () => {
     "Nostalgia for old souled millennials", 
     "Mixed Feelings"
   ];
-
+  const navigate = useNavigate()
   return (
     <div className="w-full h-full bg-black text-white flex flex-col p-4 space-y-4">
-      <div className="space-y-4">
+      <div className="space-y-4" onClick={()=>{navigate('/')}}>
         {/* Main Navigation */}
         <div className="flex items-center space-x-3">
           <AiOutlineHome size={24} />

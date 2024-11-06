@@ -97,84 +97,114 @@
 // };
 
 // export default Playlist;
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import http from "../axois";
-function Home({ data }) {
-  const [topMix, setTopMix] = useState([])
-  const [forYou, setForYou] = useState([])
-  const [played, setPlayed] = useState([])
-  const [backIn, setBackIn] = useState([])
-  const [yours, setYours] = useState([])
+import { useNavigate } from "react-router-dom";
+function Home() {
+  const [topMix, setTopMix] = useState([]);
+  const [forYou, setForYou] = useState([]);
+  const [played, setPlayed] = useState([]);
+  const [backIn, setBackIn] = useState([]);
+  const [yours, setYours] = useState([]);
+  const navigate = useNavigate();
+  // const [Data,setData] = useState()
+  // setData(Data);
+  // console.log(data);
+  const [music , setMusic] = useState([])
   useEffect(() => {
-    http.get('categories/toplists/playlists')
-    .then(response => {
-      setTopMix(response.data.playlists.items);
-      // console.log(response);
-      
-    })
-    .catch(err => {
-      console.log(err);
-    })
-  }, [])
+  http.get('browse/featured-playlists')
+  .then(response => {
+    setMusic(response.data.playlists.items);
+    console.log('featured',response);
+    
+  })
+  .catch(err => {
+    console.log(err);
+  })
+}, [])
   useEffect(() => {
-    http.get('categories/0JQ5DAqbMKFHOzuVTgTizF/playlists')
-    .then(response => {
-      setForYou(response.data.playlists.items);
-      // console.log(response);
-      
-    })
-    .catch(err => {
-      console.log(err);
-    })
-  }, [])
+    http
+      .get("browse/categories/toplists/playlists")
+      .then((response) => {
+        setTopMix(response.data.playlists.items);
+        console.log('toplists',response);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
   useEffect(() => {
-    http.get('categories/0JQ5DAqbMKFQ00XGBls6ym/playlists')
-    .then(response => {
-      setPlayed(response.data.playlists.items);
-      // console.log(response);
-      
-    })
-    .catch(err => {
-      console.log(err);
-    })
-  }, [])
+    http
+      .get("browse/categories/0JQ5DAqbMKFHOzuVTgTizF/playlists")
+      .then((response) => {
+        setForYou(response.data.playlists.items);
+        // console.log(response);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
   useEffect(() => {
-    http.get('categories/0JQ5DAqbMKFLVaM30PMBm4/playlists')
-    .then(response => {
-      setBackIn(response.data.playlists.items);
-      // console.log(response);
-      
-    })
-    .catch(err => {
-      console.log(err);
-    })
-  }, [])
+    http
+      .get("browse/categories/0JQ5DAqbMKFQ00XGBls6ym/playlists")
+      .then((response) => {
+        setPlayed(response.data.playlists.items);
+        // console.log(response);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
   useEffect(() => {
-    http.get('categories/0JQ5DAqbMKFCbimwdOYlsl/playlists')
-    .then(response => {
-      setYours(response.data.playlists.items);
-      // console.log(response);
-      
-    })
-    .catch(err => {
-      console.log(err);
-    })
-  }, [])
-  console.log(10, data);
- function handlechange(playlist){
-  // playlist.preventDefault();
- console.log('change', playlist);
- 
-  }
+    http
+      .get("browse/categories/0JQ5DAqbMKFLVaM30PMBm4/playlists")
+      .then((response) => {
+        setBackIn(response.data.playlists.items);
+        // console.log(response);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+  useEffect(() => {
+    http
+      .get("browse/categories/0JQ5DAqbMKFCbimwdOYlsl/playlists")
+      .then((response) => {
+        setYours(response.data.playlists.items);
+        // console.log(response);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+  // console.log(10, data);
+  // function handlechange(playlist) {
+  //   console.log("change", playlist);
+  //   navigate("/details", { playlist });
+  // }
+  const handlechange = (id) => {
+    // console.log(id);
+    navigate(`/details/${id}`);
+    // http.get(`playlists/${id}`)
+    //   .then((response) => {
+    //     console.log(response.data);
+    //     navigate(`/details/${id}`);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+  };
 
   return (
-<div className="bg-gray-900 min-h-screen text-white p-6">
+    <div className="bg-gray-900 min-h-screen text-white p-6">
       <h2 className="text-2xl font-bold mb-6">Good afternoon</h2>
 
       <div className="grid grid-cols-2 gap-4 mb-6">
-        {data.slice(0, 6).map((playlist, index) => (
+        {music.slice(0, 6).map((playlist, index) => (
           <div
-            onClick={()=>{handlechange(playlist)}}
+            onClick={() => {
+              handlechange(playlist.id);
+            }}
             key={index}
             className="bg-gray-800 rounded-lg p-4 flex items-center space-x-4 hover:bg-gray-700 transition duration-300"
           >
@@ -192,17 +222,21 @@ function Home({ data }) {
       <div className="grid grid-cols-4 gap-4 mb-8">
         {topMix.slice(0, 4).map((playlist, index) => (
           <div
-          onClick={()=>{handlechange(playlist)}}
+            onClick={() => {
+              handlechange(playlist.id);
+            }}
             key={index}
             className="bg-gray-800 rounded-lg p-4 flex flex-col items-center hover:bg-gray-700 transition duration-300"
           >
             <img
-            width={250} height={250}
+              width={250}
+              height={250}
               src={playlist.images[0]?.url}
               alt={playlist.name}
-              
             />
-            <span className="text-sm font-medium text-center">{playlist.name}</span>
+            <span className="text-sm font-medium text-center">
+              {playlist.name}
+            </span>
             {/* <span className="text-sm font-medium text-center">{playlist.description}</span> */}
           </div>
         ))}
@@ -211,17 +245,22 @@ function Home({ data }) {
       <div className="grid grid-cols-4 gap-4 mb-8">
         {forYou.slice(0, 4).map((playlist, index) => (
           <div
-          onClick={()=>{handlechange(playlist)}}
+            onClick={() => {
+              handlechange(playlist.id);
+            }}
             key={index}
             className="bg-gray-800 rounded-lg p-4 flex flex-col items-center hover:bg-gray-700 transition duration-300"
           >
             <img
-            width={250} height={250}
+              width={250}
+              height={250}
               src={playlist.images[0]?.url}
               alt={playlist.name}
               className="w-full h-40 rounded-md mb-2"
             />
-            <span className="text-sm font-medium text-center">{playlist.name}</span>
+            <span className="text-sm font-medium text-center">
+              {playlist.name}
+            </span>
           </div>
         ))}
       </div>
@@ -229,17 +268,22 @@ function Home({ data }) {
       <div className="grid grid-cols-4 gap-4 mb-8">
         {played.slice(0, 4).map((playlist, index) => (
           <div
-          onClick={()=>{handlechange(playlist)}}
+            onClick={() => {
+              handlechange(playlist.id);
+            }}
             key={index}
             className="bg-gray-800 rounded-lg p-4 flex flex-col items-center hover:bg-gray-700 transition duration-300"
           >
             <img
-            width={250} height={250}
+              width={250}
+              height={250}
               src={playlist.images[0]?.url}
               alt={playlist.name}
               className="w-full h-40 rounded-md mb-2"
             />
-            <span className="text-sm font-medium text-center">{playlist.name}</span>
+            <span className="text-sm font-medium text-center">
+              {playlist.name}
+            </span>
           </div>
         ))}
       </div>
@@ -247,17 +291,22 @@ function Home({ data }) {
       <div className="grid grid-cols-4 gap-4 mb-8">
         {backIn.slice(0, 4).map((playlist, index) => (
           <div
-          onClick={()=>{handlechange(playlist)}}
+            onClick={() => {
+              handlechange(playlist.id);
+            }}
             key={index}
             className="bg-gray-800 rounded-lg p-4 flex flex-col items-center hover:bg-gray-700 transition duration-300"
           >
             <img
-            width={250} height={250}
+              width={250}
+              height={250}
               src={playlist.images[0]?.url}
               alt={playlist.name}
               className="w-full h-40 rounded-md mb-2"
             />
-            <span className="text-sm font-medium text-center">{playlist.name}</span>
+            <span className="text-sm font-medium text-center">
+              {playlist.name}
+            </span>
           </div>
         ))}
       </div>
@@ -265,17 +314,22 @@ function Home({ data }) {
       <div className="grid grid-cols-4 gap-4 mb-8">
         {yours.slice(0, 4).map((playlist, index) => (
           <div
-          onClick={()=>{handlechange(playlist)}}
+            onClick={() => {
+              handlechange(playlist.id);
+            }}
             key={index}
             className="bg-gray-800 rounded-lg p-4 flex flex-col items-center hover:bg-gray-700 transition duration-300"
           >
             <img
-            width={250} height={250}
+              width={250}
+              height={250}
               src={playlist.images[0]?.url}
               alt={playlist.name}
               className="w-full h-40 rounded-md mb-2"
             />
-            <span className="text-sm font-medium text-center">{playlist.name}</span>
+            <span className="text-sm font-medium text-center">
+              {playlist.name}
+            </span>
           </div>
         ))}
       </div>

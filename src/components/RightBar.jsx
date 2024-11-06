@@ -10,7 +10,7 @@ const FriendActivity = () => {
   ];
 
   return (
-    <div className="w-full h-full bg-gradient-to-b from-black to-gray-900 text-white p-4 space-y-4">
+    <div className="w-full h-[654px] bg-gradient-to-b from-black to-gray-900 text-white p-4 space-y-4">
       {/* Header */}
       <div className="flex justify-between items-center">
         <h2 className="text-lg font-bold">Friend Activity</h2>
